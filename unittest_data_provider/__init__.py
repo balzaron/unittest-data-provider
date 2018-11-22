@@ -1,9 +1,12 @@
+from functools import wraps
+
 def data_provider(fn_data_provider):
     """
     Data provider decorator,
     allows another callable to provide the data for the test
     """
     def test_decorator(fn):
+        @wraps(fn)
         def test_repl(self, *args):
             if hasattr(fn_data_provider, '__func__'):
                 data = fn_data_provider.__func__()
